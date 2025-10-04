@@ -10,6 +10,13 @@ class DisciplinaSerializer(serializers.ModelSerializer):
 
 class AtividadeSerializer(serializers.ModelSerializer):
     disciplina = DisciplinaSerializer(read_only=True)
+    disciplina_id = serializers.PrimaryKeyRelatedField(
+        source="disciplina",
+        queryset=Disciplina.objects.all(),
+        write_only=True,
+        required=False,
+        allow_null=True
+    )
 
     class Meta:
         model = Atividade
