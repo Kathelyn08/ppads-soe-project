@@ -40,7 +40,7 @@ class Atividade(models.Model):
     prioridade = models.CharField(max_length=10, choices=Prioridade.choices, default=Prioridade.MEDIA)
     modalidade = models.CharField(max_length=12, choices=Modalidade.choices, default=Modalidade.ONLINE)
 
-    criado_em = models.DateTimeField(auto_now_add=True)
+    criado_em = models.DateTimeField(auto_now_add=True, null=True)
     concluido_em = models.DateTimeField(null=True, blank=True)
 
     class Meta:
