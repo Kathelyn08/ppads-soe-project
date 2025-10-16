@@ -1,0 +1,170 @@
+
+{% extends "ui/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="card">
+  <h2 style="margin-top:0">Disciplinas</h2>
+
+  <form id="form-disciplina" style="margin: 12px 0 16px 0;">
+    <div class="row">
+      <div>
+        <label for="disc-nome">Nome da disciplina</label>
+        <input id="disc-nome" name="nome" placeholder="Ex.: Engenharia de Software" required />
+      </div>
+      <div>
+        <label for="disc-desc">Descrição</label>
+        <input id="disc-desc" name="descricao" placeholder="Opcional" />
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <button type="submit">Cadastrar disciplina</button>
+      <span class="muted">Depois de logado, as requisições usam sua sessão.</span>
+    </div>
+  </form>
+
+  <table id="tabela-disciplinas">
+    <thead>
+      <tr><th>ID</th><th>Nome</th><th>Descrição</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">Atividades</h2>
+
+  <form id="form-atividade" style="margin: 12px 0 16px 0;">
+    <div class="row">
+      <div>
+        <label for="ativ-titulo">Título</label>
+        <input id="ativ-titulo" name="titulo" placeholder="Ex.: Entregar Trabalho 1" required />
+      </div>
+      <div>
+        <label for="ativ-descricao">Descrição</label>
+        <input id="ativ-descricao" name="descricao" placeholder="Opcional" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <div>
+        <label for="ativ-disciplina">Disciplina</label>
+        <select id="ativ-disciplina" name="disciplina_id" required></select>
+      </div>
+      <div>
+        <label for="ativ-data">Data limite</label>
+        <input id="ativ-data" name="data_limite" type="date" />
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <button type="submit">Cadastrar atividade</button>
+    </div>
+  </form>
+
+  <table id="tabela-atividades">
+    <thead>
+      <tr><th>ID</th><th>Título</th><th>Disciplina</th><th>Data limite</th><th>Status</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+  const csrftoken = getCookie('csrftoken');
+
+  async function api(url, opts={}) {
+    const final = {
+      headers: {
+        "Accept": "application/json",
+        ...(opts.method && opts.method !== "GET" ? {"Content-Type":"application/json"} : {}),
+        "X-CSRFToken": csrftoken || "",
+      },
+      credentials: "same-origin",
+      ...opts
+    };
+    const res = await fetch(url, final);
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Erro ${res.status}: ${text}`);
+    }
+    try { return await res.json(); } catch { return null; }
+  }
+
+  async function carregarDisciplinas() {
+    const data = await api("/api/disciplinas/");
+    const tbody = document.querySelector("#tabela-disciplinas tbody");
+    const select = document.querySelector("#ativ-disciplina");
+    tbody.innerHTML = "";
+    select.innerHTML = '<option value="">Selecione...</option>';
+    data.forEach(d => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${d.id}</td><td>${d.nome ?? ""}</td><td>${d.descricao ?? ""}</td>`;
+      tbody.appendChild(tr);
+      const opt = document.createElement("option");
+      opt.value = d.id;
+      opt.textContent = d.nome;
+      select.appendChild(opt);
+    });
+  }
+
+  document.querySelector("#form-disciplina").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nome = document.querySelector("#disc-nome").value.trim();
+    const descricao = document.querySelector("#disc-desc").value.trim();
+    if (!nome) return alert("Informe o nome.");
+    await api("/api/disciplinas/", {
+      method: "POST",
+      body: JSON.stringify({ nome, descricao })
+    });
+    e.target.reset();
+    await carregarDisciplinas();
+  });
+
+  async function carregarAtividades() {
+    const data = await api("/api/atividades/");
+    const tbody = document.querySelector("#tabela-atividades tbody");
+    tbody.innerHTML = "";
+    data.forEach(a => {
+      const tr = document.createElement("tr");
+      const discNome = a.disciplina?.nome ?? "-";
+      const dataLim = a.data_limite ?? "";
+      const status = a.concluido_em ? "Concluída" : "Pendente";
+      tr.innerHTML = `<td>${a.id}</td><td>${a.titulo ?? ""}</td><td>${discNome}</td><td>${dataLim}</td><td>${status}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.querySelector("#form-atividade").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const titulo = document.querySelector("#ativ-titulo").value.trim();
+    const descricao = document.querySelector("#ativ-descricao").value.trim();
+    const disciplina_id = document.querySelector("#ativ-disciplina").value;
+    const data_limite = document.querySelector("#ativ-data").value || null;
+
+    if (!titulo) return alert("Informe o título.");
+    if (!disciplina_id) return alert("Selecione a disciplina.");
+
+    await api("/api/atividades/", {
+      method: "POST",
+      body: JSON.stringify({ titulo, descricao, disciplina_id, data_limite })
+    });
+    e.target.reset();
+    await carregarAtividades();
+  });
+
+  (async function init() {
+    try {
+      await carregarDisciplinas();
+      await carregarAtividades();
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao carregar dados. Você está logado? Vá em /accounts/login/");
+    }
+  })();
+</script>
+
+{% endblock %}
