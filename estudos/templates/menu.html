@@ -1,0 +1,94 @@
+<div class="d-flex flex-column p-3 bg-dark text-light vh-100">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-warning mb-0">Estuda+</h2>
+        <small class="text-light-emphasis">Gestão de Estudos</small>
+    </div>
+    <hr class="border-secondary my-2">
+    <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-2">
+            <a href="{% url 'dashboard' %}" class="nav-link text-light bg-dark border border-secondary py-3">
+                <i class="bi bi-journal-check me-3 text-warning"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{% url 'atividade-list' %}" class="nav-link text-light bg-dark border border-secondary py-3">
+                <i class="bi bi-journal-check me-3 text-warning"></i>
+                Atividade
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="#" class="nav-link text-light bg-dark border border-secondary py-3">
+                <i class="bi bi-book me-3 text-warning"></i>
+                Disciplina
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="#" class="nav-link text-light bg-dark border border-secondary py-3">
+                <i class="bi bi-bullseye me-3 text-warning"></i>
+                Metas de Estudo
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="" class="nav-link text-light bg-dark border border-secondary py-3">
+                <i class="bi bi-calendar-event me-3 text-warning"></i>
+                Agenda
+            </a>
+        </li>
+    </ul>
+    
+    <!-- Rodapé do menu -->
+    <div class="mt-auto pt-3 border-top border-secondary">
+        <a href="{% url 'login' %}" type="button" class="btn btn-outline-light w-100 mb-3 fw-bold">
+            <i class="bi bi-box-arrow-in-right me-2"></i>
+            Sair
+        </a>
+        <div class="text-center">
+            <small class="text-light-emphasis">© Estuda+</small>
+        </div>
+    </div>
+</div>
+
+<style>
+.nav-link {
+    transition: all 0.3s ease;
+    border-radius: 8px !important;
+}
+
+.nav-link:hover {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%) !important;
+    border-color: #ecc94b !important;
+    transform: translateX(5px);
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%) !important;
+    border-color: #ecc94b !important;
+    color: #1a202c !important;
+    font-weight: 600;
+}
+
+.vh-100 {
+    min-height: 100vh;
+}
+
+/* Efeito de brilho suave no hover */
+.nav-link:hover .bi {
+    filter: drop-shadow(0 0 2px rgba(236, 201, 75, 0.5));
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.9rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
