@@ -1,3 +1,6 @@
 from django.contrib import admin
+from estudos.models.atividade import Atividade
+from estudos.models.disciplina import Disciplina
 
-# Register your models here.
+admin.site.register(Atividade)
+admin.site.register(Disciplina)
