@@ -4,9 +4,9 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models.disciplina import Disciplina
-from .models.atividade import Atividade, Status
-from .serializers import DisciplinaSerializer, AtividadeSerializer
+from estudos.models.disciplina import Disciplina
+from estudos.models.atividade import Atividade, Status
+from api.serializers import DisciplinaSerializer, AtividadeSerializer
 
 
 class Responsavel(permissions.BasePermission):
