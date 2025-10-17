@@ -1,0 +1,194 @@
+{% block content %}
+<div class="container-fluid vh-100">
+    <div class="row h-100">
+        <!-- Coluna do formulário -->
+        <div class="col-lg-12 col-12 d-flex align-items-center justify-content-center">
+            <div class="w-100" style="max-width: 400px;">
+                <!-- Cabeçalho -->
+                <div class="text-center mb-5">
+                   <i class="bi bi-person-circle text-warning d-lg-none display-4 mb-3"></i>
+                    <h1 class="fw-bold text-warning">Estuda+ </h1>
+                    <p class="text-light-emphasis">Entre com suas credenciais</p>
+                </div>
+
+                <!-- Formulário -->
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        {% for field in form %}
+                        <div class="form-floating mb-3">
+                            {% if field.name == 'username' or field.name == 'email' %}
+                                <input type="text" 
+                                       class="form-control bg-dark text-light border-secondary {% if field.errors %}is-invalid{% endif %}" 
+                                       id="{{ field.id_for_label }}" 
+                                       name="{{ field.name }}" 
+                                       placeholder="{{ field.label }}" 
+                                       value="{{ field.value|default:'' }}"
+                                       required>
+                                <label for="{{ field.id_for_label }}" class="text-light">
+                                    {% if field.name == 'username' %}Usuário{% else %}Email{% endif %}
+                                </label>
+                            {% elif field.name == 'password' %}
+                                <input type="password" 
+                                       class="form-control bg-dark text-light border-secondary {% if field.errors %}is-invalid{% endif %}" 
+                                       id="{{ field.id_for_label }}" 
+                                       name="{{ field.name }}" 
+                                       placeholder="{{ field.label }}" 
+                                       required>
+                                <label for="{{ field.id_for_label }}" class="text-light">Senha</label>
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                            
+                            {% if field.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            
+                            {% if field.help_text %}
+                                <div class="form-text text-light-emphasis">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Esqueci a senha -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <a href="#" class="text-decoration-none small text-warning">Esqueci a senha</a>
+                    </div>
+
+                    <!-- Botão de login -->
+                    <button type="submit" class="btn btn-warning btn-lg w-100 mb-3 fw-bold">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Entrar
+                    </button>
+
+                    <!-- Link para cadastro -->
+                    <div class="text-center">
+                        <p class="text-light-emphasis">
+                            Não tem uma conta? 
+                            <a href="{% url 'registro' %}" class="text-decoration-none text-warning fw-semibold">Cadastre-se</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Adicione isso no seu head ou verifique se Bootstrap está incluído -->
+<style>
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #ffffff;
+}
+
+.bg-dark {
+    background-color: #1e1e1e !important;
+}
+
+.form-control {
+    background-color: #2d3748 !important;
+    border-color: #4a5568 !important;
+    color: #ffffff !important;
+}
+
+.form-control:focus {
+    background-color: #2d3748;
+    border-color: #ecc94b;
+    box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25);
+    color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: #a0aec0 !important;
+}
+
+.form-floating > label {
+    color: #cbd5e0 !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
+    border: none;
+    color: #1a202c;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
+    color: #1a202c;
+}
+
+.text-light {
+    color: #f7fafc !important;
+}
+
+.text-light-emphasis {
+    color: #e2e8f0 !important;
+}
+
+.text-warning {
+    color: #ecc94b !important;
+}
+
+.invalid-feedback {
+    color: #fc8181;
+    font-weight: 500;
+}
+
+.vh-100 {
+    min-height: 100vh;
+}
+
+/* Melhor contraste para links */
+a.text-warning:hover {
+    color: #f6e05e !important;
+    text-decoration: underline;
+}
+
+/* Contraste para checkbox */
+.form-check-input:checked {
+    background-color: #ecc94b;
+    border-color: #ecc94b;
+}
+
+.form-check-input:focus {
+    border-color: #ecc94b;
+    box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25);
+}
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script para validação do formulário -->
+<script>
+// Validação do formulário
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+{% endblock %}
