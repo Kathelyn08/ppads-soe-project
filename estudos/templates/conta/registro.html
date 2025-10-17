@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Sistema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-dark: #0f3460;
+            --gold: #ecc94b;
+            --gold-dark: #d69e2e;
+            --text-light: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border-color: #4a5568;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 50%, var(--accent-dark) 100%) !important;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-light);
+        }
+        
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background-color: #2d3748;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .auth-header {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: #1a202c;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: none;
+        }
+        
+        .auth-header h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .auth-body {
+            padding: 2rem;
+        }
+        
+        .form-control, .form-select {
+            background-color: var(--primary-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-light) !important;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: var(--primary-dark) !important;
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
+            color: var(--text-light) !important;
+        }
+        
+        .form-control::placeholder {
+            color: var(--text-muted) !important;
+            opacity: 1;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-light) !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            color: #1a202c;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-gold:hover {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, #b7791f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
+            color: #1a202c;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .auth-footer a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: var(--gold-dark);
+            text-decoration: underline;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            border: none;
+            padding: 0.75rem 1rem;
+        }
+        
+        .alert-dismissible .btn-close {
+            padding: 0.75rem;
+        }
+        
+        .invalid-feedback {
+            display: block;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .form-text {
+            color: var(--text-muted) !important;
+            font-size: 0.8rem;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        
+        .password-input-group {
+            position: relative;
+        }
+        
+        .brand-logo {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h4>Criar Nova Conta</h4>
+            </div>
+            <div class="auth-body">
+                <div id="message-container">
+                    <!-- Mensagens serão inseridas aqui via JavaScript -->
+                </div>
+
+                <form id="register-form">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nome de Usuário</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Digite seu nome de usuário" required>
+                        <div class="form-text">Obrigatório. 150 caracteres ou menos. Letras, números e @/./+/-/_ apenas.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+                    </div>
+                    
+                    <div class="mb-3 password-input-group">
+                        <label for="password1" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Digite sua senha" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password1')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <br>
+                        <div class="form-text">
+                            <ul class="mb-0 ps-3">
+                                <li>Sua senha não pode ser muito similar às suas outras informações pessoais.</li>
+                                <li>Sua senha precisa conter pelo menos 8 caracteres.</li>
+                                <li>Sua senha não pode ser uma senha comum.</li>
+                                <li>Sua senha não pode ser inteiramente numérica.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 password-input-group">
+                        <label for="password2" class="form-label">Confirmação de Senha</label>
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Digite a mesma senha novamente" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password2')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <div class="form-text">Digite a mesma senha novamente, para verificação.</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-gold">Registrar</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simulação de mensagens (substituir pela lógica real do Django)
+        function showMessage(type, text) {
+            const messageContainer = document.getElementById('message-container');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${text}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            messageContainer.appendChild(alertDiv);
+            
+            // Remover automaticamente após 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // Exemplo de mensagens (remover em produção)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular uma mensagem de sucesso
+            // showMessage('success', 'Conta criada com sucesso! Verifique seu e-mail para ativar sua conta.');
+            
+            // Simular uma mensagem de erro
+            // showMessage('danger', 'Erro ao criar conta. Tente novamente.');
+        });
+        
+        // Alternar visibilidade da senha
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleIcon = passwordField.nextElementSibling.querySelector('i');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Validação do formulário
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password1 = document.getElementById('password1').value;
+            const password2 = document.getElementById('password2').value;
+            
+            if (password1 !== password2) {
+                showMessage('danger', 'As senhas não coincidem. Por favor, verifique e tente novamente.');
+                return;
+            }
+            
+            // Simulação de registro bem-sucedido
+            showMessage('success', 'Conta criada com sucesso! Verifique seu e-mail para ativar sua conta.');
+            
+            // Em um ambiente real, aqui você enviaria os dados para o servidor
+            // e redirecionaria o usuário após o registro bem-sucedido
+        });
+    </script>
+</body>
+</html>
