@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from ..estudos.models.disciplina import Disciplina
-from ..estudos.models.atividade import Atividade
+from estudos.models.disciplina import Disciplina
+from estudos.models.atividade import Atividade
 
 class DisciplinaSerializer(serializers.ModelSerializer):
     class Meta:
