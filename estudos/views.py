@@ -75,3 +75,16 @@ class AtividadeViewSet(SomenteDoUsuarioMixin, viewsets.ModelViewSet):
             AtividadeSerializer(atividade, context={"request": request}).data,
             status=status.HTTP_200_OK,
         )
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cadastrar_usuario(request):
+    username = request.data.get('username')
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    if User.objects.filter(username=username).exists():
+        return Response({"ERRO": "O usuário já existe."}, status=status.HTTP_400_BAD_REQUEST)
+
+    User.objects.create_user(username=username, email=email, password=password)
+    return Response({"Alívio!": "Usuário criado com sucesso!"}, status=status.HTTP_201_CREATED)
