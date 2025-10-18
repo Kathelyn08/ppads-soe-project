@@ -1,11 +1,13 @@
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 from rest_framework import viewsets, permissions, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import User
 
 from estudos.models.disciplina import Disciplina
-from estudos.models.atividade import Atividade, Status
+from estudos.models.atividade import Atividade
 from api.serializers import DisciplinaSerializer, AtividadeSerializer
 
 
@@ -61,13 +63,13 @@ class AtividadeViewSet(SomenteDoUsuarioMixin, viewsets.ModelViewSet):
     def concluir(self, request, pk=None):
         atividade = self.get_object()
 
-        if atividade.status == Status.CONCLUIDA:
+        if atividade.status == Atividade.Status.CONCLUIDA:
             return Response(
                 {"Atenção": "Essa ação já foi concluída."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        atividade.status = Status.CONCLUIDA
+        atividade.status = Atividade.Status.CONCLUIDA
         atividade.concluido_em = timezone.now()
         atividade.save()
 
@@ -75,3 +77,17 @@ class AtividadeViewSet(SomenteDoUsuarioMixin, viewsets.ModelViewSet):
             AtividadeSerializer(atividade, context={"request": request}).data,
             status=status.HTTP_200_OK,
         )
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def cadastrar_usuario(request):
+    username = request.data.get('username')
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    if User.objects.filter(username=username).exists():
+        return Response({"ERRO": "O usuário já existe."}, status=status.HTTP_400_BAD_REQUEST)
+
+    User.objects.create_user(username=username, email=email, password=password)
+    return Response({"Alívio!": "Usuário criado com sucesso!"}, status=status.HTTP_201_CREATED)
