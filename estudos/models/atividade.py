@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -23,7 +24,7 @@ class Atividade(models.Model):
 
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="atividades")
     disciplina = models.ForeignKey("Disciplina", on_delete=models.SET_NULL, null=True, blank=True, related_name="atividades")
-    peso = models.PositiveSmallIntegerField(null=True, blank=True, choices=[(i, i) for i in range(1, 11)])
+    peso = models.PositiveSmallIntegerField(null=True, blank=True, choices=[(i, i) for i in range(1, 11)], default=5)
     titulo = models.CharField(max_length=120)
     descricao = models.TextField(blank=True)
     data_prazo = models.DateTimeField()
@@ -34,7 +35,7 @@ class Atividade(models.Model):
     categoria = models.CharField(max_length=15, choices=Categoria.choices, default=Categoria.TAREFA)
     prioridade = models.CharField(max_length=10, choices=Prioridade.choices, default=Prioridade.MEDIA)
     modalidade = models.CharField(max_length=12, choices=Modalidade.choices, default=Modalidade.ONLINE)
-    criado_em = models.DateTimeField(auto_now_add=True)
+    criado_em = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
         indexes = [
