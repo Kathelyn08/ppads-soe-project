@@ -1,8 +1,7 @@
-<!-- templates/atividade/atividade_form.html -->
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if object %}Editar {{ object.titulo }}{% else %}Nova Atividade{% endif %}
+{% if object %}Editar {{ object.titulo }}{% else %}Nova Atividade{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -15,90 +14,55 @@
                         {% if object %}Editar Atividade{% else %}Nova Atividade{% endif %}
                     </h4>
                 </div>
-                
-                <form method="post" novalidate>
+
+                <form class="row" method="post" novalidate>
                     {% csrf_token %}
-                    
+
                     {% if form.non_field_errors %}
                     <div class="alert alert-danger bg-danger text-light border-0 mb-4">
                         {% for error in form.non_field_errors %}
-                            {{ error }}
+                        {{ error }}
                         {% endfor %}
                     </div>
                     {% endif %}
 
-                    <!-- Título -->
-                    <div class="mb-4">
+                    <div class="col-7 mb-4">
                         <label for="{{ form.titulo.id_for_label }}" class="form-label text-light mb-2">
                             Título *
                         </label>
-                        {{ form.titulo }}
+                        <div class="d-flex flex-column">
+                            {{ form.titulo }}
+                        </div>
                         {% if form.titulo.errors %}
                         <div class="text-warning mt-1">{{ form.titulo.errors }}</div>
                         {% endif %}
                     </div>
 
-                    <!-- Descrição -->
-                    <div class="mb-4">
+                    <div class="col-5 mb-4">
+                        <label for="{{ form.disciplina.id_for_label }}" class="form-label text-light mb-2">
+                            Disciplina
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.disciplina }}
+                        </div>
+                        {% if form.disciplina.errors %}
+                        <div class="text-warning mt-1">{{ form.disciplina.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12 mb-4">
                         <label for="{{ form.descricao.id_for_label }}" class="form-label text-light mb-2">
                             Descrição
                         </label>
-                        {{ form.descricao }}
+                        <div class="d-flex flex-column">
+                            {{ form.descricao }}
+                        </div>
                         {% if form.descricao.errors %}
                         <div class="text-warning mt-1">{{ form.descricao.errors }}</div>
                         {% endif %}
                     </div>
 
-                    <div class="row">
-                        <!-- Disciplina -->
-                        <div class="col-md-6 mb-4">
-                            <label for="{{ form.disciplina.id_for_label }}" class="form-label text-light mb-2">
-                                Disciplina
-                            </label>
-                            {{ form.disciplina }}
-                            {% if form.disciplina.errors %}
-                            <div class="text-warning mt-1">{{ form.disciplina.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Categoria -->
-                        <div class="col-md-6 mb-4">
-                            <label for="{{ form.categoria.id_for_label }}" class="form-label text-light mb-2">
-                                Categoria
-                            </label>
-                            {{ form.categoria }}
-                            {% if form.categoria.errors %}
-                            <div class="text-warning mt-1">{{ form.categoria.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Modalidade -->
-                        <div class="col-md-6 mb-4">
-                            <label for="{{ form.modalidade.id_for_label }}" class="form-label text-light mb-2">
-                                Modalidade
-                            </label>
-                            {{ form.modalidade }}
-                            {% if form.modalidade.errors %}
-                            <div class="text-warning mt-1">{{ form.modalidade.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Local -->
-                        <div class="col-md-6 mb-4">
-                            <label for="{{ form.local.id_for_label }}" class="form-label text-light mb-2">
-                                Local
-                            </label>
-                            {{ form.local }}
-                            {% if form.local.errors %}
-                            <div class="text-warning mt-1">{{ form.local.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Data do Prazo -->
-                    <div class="mb-4">
+                    <div class="col-4 mb-4">
                         <label for="{{ form.data_prazo.id_for_label }}" class="form-label text-light mb-2">
                             Data do Prazo *
                         </label>
@@ -107,55 +71,89 @@
                         <div class="text-warning mt-1">{{ form.data_prazo.errors }}</div>
                         {% endif %}
                     </div>
-
-                    <div class="row">
-                        <!-- Prioridade -->
-                        <div class="col-md-4 mb-4">
-                            <label for="{{ form.prioridade.id_for_label }}" class="form-label text-light mb-2">
-                                Prioridade
-                            </label>
-                            {{ form.prioridade }}
-                            {% if form.prioridade.errors %}
-                            <div class="text-warning mt-1">{{ form.prioridade.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <!-- Estimativa -->
-                        <div class="col-md-4 mb-4">
-                            <label for="{{ form.estimativa_min.id_for_label }}" class="form-label text-light mb-2">
-                                Estimativa (minutos)
-                            </label>
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.estimativa_min.id_for_label }}" class="form-label text-light mb-2">
+                            Estimativa (minutos)
+                        </label>
+                        <div class="d-flex flex-column">
                             {{ form.estimativa_min }}
-                            {% if form.estimativa_min.errors %}
-                            <div class="text-warning mt-1">{{ form.estimativa_min.errors }}</div>
-                            {% endif %}
                         </div>
-
-                        <!-- Status -->
-                        <div class="col-md-4 mb-4">
-                            <label for="{{ form.status.id_for_label }}" class="form-label text-light mb-2">
-                                Status
-                            </label>
-                            {{ form.status }}
-                            {% if form.status.errors %}
-                            <div class="text-warning mt-1">{{ form.status.errors }}</div>
-                            {% endif %}
+                        {% if form.estimativa_min.errors %}
+                        <div class="text-warning mt-1">{{ form.estimativa_min.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.categoria.id_for_label }}" class="form-label text-light mb-2">
+                            Categoria
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.categoria }}
                         </div>
+                        {% if form.categoria.errors %}
+                        <div class="text-warning mt-1">{{ form.categoria.errors }}</div>
+                        {% endif %}
                     </div>
 
-                    <!-- Peso -->
-                    <div class="mb-4">
+                    <div class="col-4 mb-4">
                         <label for="{{ form.peso.id_for_label }}" class="form-label text-light mb-2">
                             Peso
                         </label>
-                        {{ form.peso }}
+                        <div class="d-flex flex-column">
+                            {{ form.peso }}
+                        </div>
                         {% if form.peso.errors %}
                         <div class="text-warning mt-1">{{ form.peso.errors }}</div>
                         {% endif %}
                     </div>
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.prioridade.id_for_label }}" class="form-label text-light mb-2">
+                            Prioridade
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.prioridade }}
+                        </div>
+                        {% if form.prioridade.errors %}
+                        <div class="text-warning mt-1">{{ form.prioridade.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.status.id_for_label }}" class="form-label text-light mb-2">
+                            Status
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.status }}
+                        </div>
+                        {% if form.status.errors %}
+                        <div class="text-warning mt-1">{{ form.status.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.modalidade.id_for_label }}" class="form-label text-light mb-2">
+                            Modalidade
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.modalidade }}
+                        </div>
+                        {% if form.modalidade.errors %}
+                        <div class="text-warning mt-1">{{ form.modalidade.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-4 mb-4">
+                        <label for="{{ form.local.id_for_label }}" class="form-label text-light mb-2">
+                            Local
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.local }}
+                        </div>
+                        {% if form.local.errors %}
+                        <div class="text-warning mt-1">{{ form.local.errors }}</div>
+                        {% endif %}
+                    </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 pt-3 border-top border-secondary">
-                        <a href="{% if object %}{% url 'atividade-detail' object.pk %}{% else %}{% url 'atividade-list' %}{% endif %}" class="btn btn-outline-light me-md-2">
+                        <a href="{% if object %}{% url 'atividade-detail' object.pk %}{% else %}{% url 'atividade-list' %}{% endif %}"
+                            class="btn btn-outline-light me-md-2">
                             Cancelar
                         </a>
                         <button type="submit" class="btn btn-warning">
@@ -169,122 +167,124 @@
 </div>
 
 <style>
-.bg-dark {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
-}
+    .bg-dark {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    }
 
-.bg-secondary {
-    background-color: #2d3748 !important;
-}
+    .bg-secondary {
+        background-color: #2d3748 !important;
+    }
 
-.rounded-3 {
-    border-radius: 12px;
-}
+    .rounded-3 {
+        border-radius: 12px;
+    }
 
-.form-control, .form-select {
-    background-color: #1a1a2e !important;
-    border: 1px solid #4a5568 !important;
-    color: #ffffff !important;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    width: 100%;
-}
+    .form-control,
+    .form-select {
+        background-color: #1a1a2e !important;
+        border: 1px solid #4a5568 !important;
+        color: #ffffff !important;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        width: 100%;
+    }
 
-.form-control:focus, .form-select:focus {
-    background-color: #1a1a2e !important;
-    border-color: #ecc94b !important;
-    box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
-    color: #ffffff !important;
-}
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #1a1a2e !important;
+        border-color: #ecc94b !important;
+        box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
+        color: #ffffff !important;
+    }
 
-.form-control::placeholder {
-    color: #a0aec0 !important;
-    opacity: 1;
-}
+    .form-control::placeholder {
+        color: #a0aec0 !important;
+        opacity: 1;
+    }
 
-.form-label {
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: #e2e8f0 !important;
-    display: block;
-    margin-bottom: 0.5rem;
-}
+    .form-label {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #e2e8f0 !important;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
 
-.btn-warning {
-    background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
-    border: none;
-    color: #1a202c;
-    font-weight: 600;
-    padding: 0.75rem 2rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+    .btn-warning {
+        background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
+        border: none;
+        color: #1a202c;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
 
-.btn-warning:hover {
-    background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
-    color: #1a202c;
-}
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
+        color: #1a202c;
+    }
 
-.btn-outline-light {
-    border: 1px solid #a0aec0;
-    color: #a0aec0;
-    background: transparent;
-    padding: 0.75rem 2rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+    .btn-outline-light {
+        border: 1px solid #a0aec0;
+        color: #a0aec0;
+        background: transparent;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
 
-.btn-outline-light:hover {
-    background-color: #a0aec0;
-    color: #1a202c;
-    border-color: #a0aec0;
-    transform: translateY(-2px);
-}
+    .btn-outline-light:hover {
+        background-color: #a0aec0;
+        color: #1a202c;
+        border-color: #a0aec0;
+        transform: translateY(-2px);
+    }
 
-.text-warning {
-    color: #ecc94b !important;
-}
+    .text-warning {
+        color: #ecc94b !important;
+    }
 
-.border-secondary {
-    border-color: #4a5568 !important;
-}
+    .border-secondary {
+        border-color: #4a5568 !important;
+    }
 
-.alert-danger {
-    border-radius: 8px;
-    border: 1px solid #e53e3e;
-}
+    .alert-danger {
+        border-radius: 8px;
+        border: 1px solid #e53e3e;
+    }
 
-/* Garantir que todos os campos tenham o mesmo estilo */
-input[type="text"],
-input[type="number"],
-input[type="datetime-local"],
-textarea,
-select {
-    background-color: #1a1a2e !important;
-    border: 1px solid #4a5568 !important;
-    color: #ffffff !important;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-}
+    /* Garantir que todos os campos tenham o mesmo estilo */
+    input[type="text"],
+    input[type="number"],
+    input[type="datetime-local"],
+    textarea,
+    select {
+        background-color: #1a1a2e !important;
+        border: 1px solid #4a5568 !important;
+        color: #ffffff !important;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+    }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="datetime-local"]:focus,
-textarea:focus,
-select:focus {
-    background-color: #1a1a2e !important;
-    border-color: #ecc94b !important;
-    box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
-    color: #ffffff !important;
-}
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="datetime-local"]:focus,
+    textarea:focus,
+    select:focus {
+        background-color: #1a1a2e !important;
+        border-color: #ecc94b !important;
+        box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
+        color: #ffffff !important;
+    }
 </style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Aplicar classes Bootstrap aos campos do formulário
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
@@ -292,20 +292,20 @@ select:focus {
                 input.classList.add('form-control');
             }
         });
-        
+
         // Placeholders
         const tituloInput = document.getElementById('{{ form.titulo.id_for_label }}');
         if (tituloInput) tituloInput.placeholder = 'Digite o título da atividade...';
-        
+
         const descricaoTextarea = document.getElementById('{{ form.descricao.id_for_label }}');
         if (descricaoTextarea) descricaoTextarea.placeholder = 'Descreva os detalhes da atividade...';
-        
+
         const localInput = document.getElementById('{{ form.local.id_for_label }}');
         if (localInput) localInput.placeholder = 'Local onde será realizada a atividade...';
-        
+
         const pesoInput = document.getElementById('{{ form.peso.id_for_label }}');
         if (pesoInput) pesoInput.placeholder = '0.0';
-        
+
         const estimativaInput = document.getElementById('{{ form.estimativa_min.id_for_label }}');
         if (estimativaInput) estimativaInput.placeholder = '60';
     });
