@@ -15,7 +15,7 @@ def registro(request):
             login(request, user)
             messages.success(request, f'Conta criada com sucesso para {username}!')
             
-            return redirect('dashboard.html')  
+            return redirect('/estudos/dashboard')  
     else:
         form = UserCreationForm()
     
