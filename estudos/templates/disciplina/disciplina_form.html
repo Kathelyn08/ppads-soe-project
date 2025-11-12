@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if object %}Editar {{ object.nome }}{% else %}Nova Disciplina{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="p-3 bg-dark text-light min-vh-100">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="bg-secondary border-0 rounded-3 p-4">
+                <div class="mb-4 border-bottom border-secondary pb-3">
+                    <h4 class="mb-0 text-warning">
+                        {% if object %}Editar Disciplina{% else %}Nova Disciplina{% endif %}
+                    </h4>
+                </div>
+
+                <form class="row" method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger bg-danger text-light border-0 mb-4">
+                        {% for error in form.non_field_errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="col-12 mb-4">
+                        <label for="{{ form.nome.id_for_label }}" class="form-label text-light mb-2">
+                            Nome *
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.nome }}
+                        </div>
+                        {% if form.nome.errors %}
+                        <div class="text-warning mt-1">{{ form.nome.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12 mb-4">
+                        <label for="{{ form.descricao.id_for_label }}" class="form-label text-light mb-2">
+                            Descrição
+                        </label>
+                        <div class="d-flex flex-column">
+                            {{ form.descricao }}
+                        </div>
+                        {% if form.descricao.errors %}
+                        <div class="text-warning mt-1">{{ form.descricao.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4 pt-3 border-top border-secondary">
+                        <a href="{% if object %}{% url 'disciplina-detail' object.pk %}{% else %}{% url 'disciplina-list' %}{% endif %}"
+                            class="btn btn-outline-light me-md-2">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            {% if object %}Atualizar{% else %}Criar{% endif %} Disciplina
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-dark {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    }
+
+    .bg-secondary {
+        background-color: #2d3748 !important;
+    }
+
+    .rounded-3 {
+        border-radius: 12px;
+    }
+
+    .form-control,
+    .form-select {
+        background-color: #1a1a2e !important;
+        border: 1px solid #4a5568 !important;
+        color: #ffffff !important;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        width: 100%;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #1a1a2e !important;
+        border-color: #ecc94b !important;
+        box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
+        color: #ffffff !important;
+    }
+
+    .form-control::placeholder {
+        color: #a0aec0 !important;
+        opacity: 1;
+    }
+
+    .form-label {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #e2e8f0 !important;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
+        border: none;
+        color: #1a202c;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
+        color: #1a202c;
+    }
+
+    .btn-outline-light {
+        border: 1px solid #a0aec0;
+        color: #a0aec0;
+        background: transparent;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-light:hover {
+        background-color: #a0aec0;
+        color: #1a202c;
+        border-color: #a0aec0;
+        transform: translateY(-2px);
+    }
+
+    .text-warning {
+        color: #ecc94b !important;
+    }
+
+    .border-secondary {
+        border-color: #4a5568 !important;
+    }
+
+    .alert-danger {
+        border-radius: 8px;
+        border: 1px solid #e53e3e;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="datetime-local"],
+    textarea,
+    select {
+        background-color: #1a1a2e !important;
+        border: 1px solid #4a5568 !important;
+        color: #ffffff !important;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="datetime-local"]:focus,
+    textarea:focus,
+    select:focus {
+        background-color: #1a1a2e !important;
+        border-color: #ecc94b !important;
+        box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25) !important;
+        color: #ffffff !important;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+       
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type !== 'checkbox' && !input.classList.contains('btn')) {
+                input.classList.add('form-control');
+            }
+        });
+
+        const nomeInput = document.getElementById('{{ form.nome.id_for_label }}');
+        if (nomeInput) nomeInput.placeholder = 'Digite o nome da disciplina...';
+
+        const descricaoTextarea = document.getElementById('{{ form.descricao.id_for_label }}');
+        if (descricaoTextarea) descricaoTextarea.placeholder = 'Descreva os detalhes da disciplina...';
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ disciplina.nome }}{% endblock %}
+
+{% block content %}
+<div class="p-3 bg-dark text-light min-vh-100">
+    <div class="row g-3">
+
+        <div class="col-12">
+            <div class="bg-secondary border-0 rounded-3">
+                <div class="border-bottom border-secondary p-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-warning">{{ disciplina.nome }}</h4>
+                </div>
+                
+                <div class="p-3">
+                    {% if disciplina.descricao %}
+                    <div class="mb-4">
+                        <h5 class="text-light mb-2">Descrição</h5>
+                        <p class="text-light-emphasis">{{ disciplina.descricao|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <div class="col-3">
+                            <div class="bg-dark rounded-3 p-3">
+                                <div class="mb-2 pb-2 border-bottom border-secondary">
+                                    <span class="text-light">Criado em:</span>
+                                    <span class="text-light-emphasis float-end">{{ disciplina.criado_em|date:"d/m/Y H:i" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-top border-secondary p-3">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="{% url 'disciplina-update' disciplina.pk %}" class="btn btn-warning me-md-2">
+                            Editar
+                        </a>
+                        <a href="{% url 'disciplina-delete' disciplina.pk %}" class="btn btn-danger me-md-2">
+                            Excluir
+                        </a>
+                        <a href="{% url 'disciplina-list' %}" class="btn btn-outline-light">
+                            Voltar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-dark {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+.bg-secondary {
+    background-color: #2d3748 !important;
+}
+
+.rounded-3 {
+    border-radius: 12px;
+}
+
+.text-light-emphasis {
+    color: #a0aec0 !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
+    border: none;
+    color: #1a202c;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(236, 201, 75, 0.4);
+    color: #1a202c;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+    color: #ffffff;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #2f855a 0%, #276749 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(56, 161, 105, 0.4);
+    color: #ffffff;
+}
+
+.btn-outline-light {
+    border: 1px solid #a0aec0;
+    color: #a0aec0;
+    background: transparent;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: #a0aec0;
+    color: #1a202c;
+    border-color: #a0aec0;
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border: 1px solid #4299e1;
+    color: #4299e1;
+    background: transparent;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #4299e1;
+    color: #1a202c;
+    border-color: #4299e1;
+    transform: translateY(-2px);
+}
+
+.btn-outline-warning {
+    border: 1px solid #ecc94b;
+    color: #ecc94b;
+    background: transparent;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ecc94b;
+    color: #1a202c;
+    border-color: #ecc94b;
+    transform: translateY(-2px);
+}
+
+.border-secondary {
+    border-color: #4a5568 !important;
+}
+
+.rounded-2 {
+    border-radius: 8px;
+}
+
+.badge {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+</style>
+{% endblock %}
