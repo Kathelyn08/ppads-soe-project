@@ -9,7 +9,8 @@ from .views.atividade import (
     AtividadeDetailView,
     AtividadeCreateView,
     AtividadeUpdateView,
-    AtividadeDeleteView
+    AtividadeDeleteView,
+    AtividadeMarkFinishedView
 )
 
 from .views.disciplina import (
@@ -30,6 +31,7 @@ urlpatterns = [
     path('atividade/novo/', AtividadeCreateView.as_view(), name='atividade-create'),
     path('atividade/<int:pk>/editar/', AtividadeUpdateView.as_view(), name='atividade-update'),
     path('atividade/<int:pk>/excluir/', AtividadeDeleteView.as_view(), name='atividade-delete'),
+    path('atividade/<int:pk>/mark-finished/', AtividadeMarkFinishedView.as_view(), name='atividade-mark-finished'),
 
     path('disciplina/', DisciplinaListView.as_view(), name='disciplina-list'),
     path('disciplina/<int:pk>/', DisciplinaDetailView.as_view(), name='disciplina-detail'),

@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from estudos.models.atividade import Atividade
+from datetime import datetime
 
 class AtividadeListView(LoginRequiredMixin, ListView):
     model = Atividade
@@ -39,6 +40,11 @@ class AtividadeDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Atividade.objects.filter(usuario=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.now().isoformat()
+        return context
 
 class AtividadeCreateView(LoginRequiredMixin, CreateView):
     model = Atividade
@@ -90,4 +96,11 @@ class AtividadeDeleteView(LoginRequiredMixin, DeleteView):
     
     def get_queryset(self):
         return Atividade.objects.filter(usuario=self.request.user)
-    
+
+class AtividadeMarkFinishedView(LoginRequiredMixin, UpdateView):
+    model = Atividade
+    fields = ["status", "concluido_em"]
+    success_url = reverse_lazy('atividade-list')
+
+    def get_queryset(self):
+        return Atividade.objects.filter(usuario=self.request.user)

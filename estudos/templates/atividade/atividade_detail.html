@@ -122,8 +122,12 @@
                     <h5 class="mb-0 text-light">Ações Rápidas</h5>
                 </div>
                     {% if atividade.status != 'CONCLUIDA' %}
-                    <form method="post" action="{% url 'atividade-mark-complete' atividade.pk %}" class="d-inline">
+                    <form method="post" action="{% url 'atividade-mark-finished' atividade.pk %}" class="d-inline">
                         {% csrf_token %}
+
+                        <input type="hidden" name="status" value="CONCLUIDA" />
+                        <input type="hidden" name="concluido_em" value="{{ now }}" />
+
                         <button type="submit" class="btn btn-success w-100">
                             Marcar como Concluída
                         </button>
