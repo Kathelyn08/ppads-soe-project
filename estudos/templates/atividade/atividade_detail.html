@@ -5,7 +5,7 @@
 {% block content %}
 <div class="p-3 bg-dark text-light min-vh-100">
     <div class="row g-3">
-        <!-- Coluna Principal -->
+ 
         <div class="col-md-8">
             <div class="bg-secondary border-0 rounded-3">
                 <div class="border-bottom border-secondary p-3 d-flex justify-content-between align-items-center">
@@ -96,10 +96,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Coluna Lateral -->
+
         <div class="col-md-4">
-            <!-- Status da Atividade -->
             <div class="bg-secondary border-0 rounded-3 mb-3">
                 <div class="border-bottom border-secondary p-3">
                     <h5 class="mb-0 text-light">Status da Atividade</h5>
@@ -115,34 +113,22 @@
                         </span>
                     </div>
                     
+
+                </div>
+            </div>
+            
+            <div class="bg-secondary border-0 rounded-3">
+                <div class="border-bottom border-secondary p-3">
+                    <h5 class="mb-0 text-light">Ações Rápidas</h5>
+                </div>
                     {% if atividade.status != 'CONCLUIDA' %}
-                    <form method="post" action="{% url 'atividade-marcar-concluida' atividade.pk %}" class="d-inline">
+                    <form method="post" action="{% url 'atividade-mark-complete' atividade.pk %}" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success w-100">
                             Marcar como Concluída
                         </button>
                     </form>
                     {% endif %}
-                </div>
-            </div>
-            
-            <!-- Ações Rápidas -->
-            <div class="bg-secondary border-0 rounded-3">
-                <div class="border-bottom border-secondary p-3">
-                    <h5 class="mb-0 text-light">Ações Rápidas</h5>
-                </div>
-                <div class="p-3">
-                    <div class="d-grid gap-2">
-                        <a href="{% url 'atividade-create' %}?duplicar={{ atividade.pk }}" class="btn btn-outline-primary">
-                            Duplicar Atividade
-                        </a>
-                        {% if atividade.status != 'CONCLUIDA' %}
-                        <a href="#" class="btn btn-outline-warning">
-                            Pausar
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
             </div>
         </div>
     </div>

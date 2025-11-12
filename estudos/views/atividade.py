@@ -90,3 +90,11 @@ class AtividadeDeleteView(LoginRequiredMixin, DeleteView):
     
     def get_queryset(self):
         return Atividade.objects.filter(usuario=self.request.user)
+    
+class AtividadeMarkComplete(LoginRequiredMixin, UpdateView):
+    model = Atividade
+    template_name = 'atividade/atividade_mark_complete.html'
+    fields = [
+        'status',
+    ]
+    success_url = reverse_lazy('atividade-list')
