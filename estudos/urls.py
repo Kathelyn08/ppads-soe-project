@@ -21,6 +21,13 @@ from .views.disciplina import (
     DisciplinaDeleteView
 )
 
+from .views.meta import (
+    MetaListView,
+    MetaCreateView,
+    MetaUpdateView,
+    MetaDeleteView
+)
+
 from .views.agenda import AgendaView
 
 urlpatterns = [
@@ -41,6 +48,11 @@ urlpatterns = [
     path('disciplina/novo/', DisciplinaCreateView.as_view(), name='disciplina-create'),
     path('disciplina/<int:pk>/editar/', DisciplinaUpdateView.as_view(), name='disciplina-update'),
     path('disciplina/<int:pk>/excluir/', DisciplinaDeleteView.as_view(), name='disciplina-delete'),
+
+    path('meta/', MetaListView.as_view(), name='meta-list'),
+    path('meta/novo/', MetaCreateView.as_view(), name='meta-create'),
+    path('meta/<int:pk>/editar/', MetaUpdateView.as_view(), name='meta-update'),
+    path('meta/<int:pk>/excluir/', MetaDeleteView.as_view(), name='meta-delete'),
 
     path('agenda/', AgendaView.as_view(), name='agenda'),
 ]
