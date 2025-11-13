@@ -6,6 +6,7 @@ from estudos.models.disciplina import Disciplina
 from django import forms
 from datetime import date, timedelta
 from itertools import groupby
+from ..util import week_range
 
 class Filter(forms.Form):
     disciplina = forms.ModelChoiceField(
@@ -24,9 +25,7 @@ class Filter(forms.Form):
     )
 
     def __init__(self, params, *args, user=None, **kwargs):
-        today = date.today()
-        week_start = today - timedelta(days=today.weekday() + 1)
-        week_end = week_start + timedelta(days=6)
+        week_start, week_end = week_range()
         defaults = {
             "data_prazo__gte": week_start,
             "data_prazo__lte": week_end
