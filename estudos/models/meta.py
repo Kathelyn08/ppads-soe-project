@@ -13,7 +13,9 @@ class Meta(models.Model):
     data_final = models.DateTimeField(null=True, blank=True)
 
     def concluida(self):
-        return self.data_final and ((self.data_final - self.data_inicial).total_seconds() / 60 / 60) >= self.alvo
+        return self.data_final and (
+            (self.data_final - self.data_inicial).total_seconds() / 60 / 60 >= self.alvo
+        )
 
     def status(self):
         if self.concluida():
