@@ -25,6 +25,7 @@ from .views.agenda import AgendaView
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='conta/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro/', registro, name='registro'),
     path('dashboard/', dashboard, name='dashboard'),
 

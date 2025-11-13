@@ -39,10 +39,14 @@
     
     <!-- Rodapé do menu -->
     <div class="mt-auto pt-3 border-top border-secondary">
-        <a href="{% url 'login' %}" type="button" class="btn btn-outline-light w-100 mb-3 fw-bold">
-            <i class="bi bi-box-arrow-in-right me-2"></i>
-            Sair
-        </a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-outline-light w-100 mb-3 fw-bold">
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+                Sair
+            </button>
+        </form>
         <div class="text-center">
             <small class="text-light-emphasis">© Estuda+</small>
         </div>
