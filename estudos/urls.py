@@ -21,6 +21,8 @@ from .views.disciplina import (
     DisciplinaDeleteView
 )
 
+from .views.agenda import AgendaView
+
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='conta/login.html'), name='login'),
     path('registro/', registro, name='registro'),
@@ -38,4 +40,6 @@ urlpatterns = [
     path('disciplina/novo/', DisciplinaCreateView.as_view(), name='disciplina-create'),
     path('disciplina/<int:pk>/editar/', DisciplinaUpdateView.as_view(), name='disciplina-update'),
     path('disciplina/<int:pk>/excluir/', DisciplinaDeleteView.as_view(), name='disciplina-delete'),
+
+    path('agenda/', AgendaView.as_view(), name='agenda'),
 ]

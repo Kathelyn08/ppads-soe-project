@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Agenda{% endblock %}
+
+{% block content %}
+<div class="p-3 bg-dark text-light min-vh-100">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="text-light"><i class="bi bi-calendar-event"></i> Agenda</h4>
+    </div>
+
+    <div class="card mb-4 bg-secondary border-0">
+        <div class="card-body">
+            <form method="get">
+                <div class="d-flex text-light gap-3 align-items-end">
+                    {{ form }}
+
+                    <div>
+                        <button type="submit" class="btn btn-outline-warning me-2">Filtrar</button>
+                        <a href="{% url 'agenda' %}" class="btn btn-outline-light">Limpar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if atividades %}
+        {% regroup atividades by data_prazo.date as grupo %}
+        {% for date, atividades in grupo %}
+            <h5>{{ date|date:"d M y" }}</h5>
+            <hr />
+
+            {% for atividade in atividades %}
+                <div class="card position-relative mb-3 bg-secondary border-0 border-start border-3 border-{{ atividade.prioridade_color }}">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h5 class="card-title text-light">
+                                    {{ atividade.titulo }}
+
+                                    <a href="{% url 'atividade-detail' atividade.pk %}" class="stretched-link"></a>
+
+                                    <small class="text-light-emphasis">- {{ atividade.disciplina }}</small>
+                                </h5>
+
+                                <span class="badge text-bg-{{ atividade.status_color }}">
+                                    {{ atividade.get_status_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-journal-check display-1 text-light-emphasis mb-3"></i>
+            <h3 class="text-light-emphasis">Nenhum resultado para o período selecionado</h3>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.bg-dark {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+.bg-secondary {
+    background-color: #2d3748 !important;
+}
+
+.card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.form-select:focus {
+    background-color: #2d3748;
+    border-color: #ecc94b;
+    box-shadow: 0 0 0 0.2rem rgba(236, 201, 75, 0.25);
+    color: #ffffff;
+}
+
+.btn-outline-warning {
+    border-color: #ecc94b;
+    color: #ecc94b;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ecc94b;
+    color: #1a202c;
+    border-color: #ecc94b;
+}
+
+.btn-outline-light {
+    border-color: #a0aec0;
+    color: #a0aec0;
+}
+
+.btn-outline-light:hover {
+    background-color: #a0aec0;
+    color: #1a202c;
+    border-color: #a0aec0;
+}
+
+.text-light-emphasis {
+    color: #a0aec0 !important;
+}
+
+.border-secondary {
+    border-color: #4a5568 !important;
+}
+
+.page-link {
+    border-radius: 6px;
+    margin: 0 2px;
+}
+
+.page-link:hover {
+    background-color: #4a5568 !important;
+    border-color: #ecc94b;
+}
+</style>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+{% endblock %}

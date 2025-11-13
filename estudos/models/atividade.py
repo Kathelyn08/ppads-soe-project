@@ -3,10 +3,16 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class Atividade(models.Model):
-    class Prioridade(models.TextChoices):
-        BAIXA = "BAIXA", "Baixa"
-        MEDIA = "MEDIA", "Média"
-        ALTA = "ALTA", "Alta"
+    class Prioridade(models.IntegerChoices):
+        BAIXA = 1, "Baixa"
+        MEDIA = 2, "Média"
+        ALTA = 3, "Alta"
+
+        def color(self):
+            match self:
+                case self.BAIXA: return "success"
+                case self.MEDIA: return "warning"
+                case self.ALTA: return "danger"
 
     class Categoria(models.TextChoices):
         PROVA = "PROVA", "Prova"
@@ -22,6 +28,12 @@ class Atividade(models.Model):
         EM_ANDAMENTO = "EM_ANDAMENTO", "Em andamento"
         CONCLUIDA = "CONCLUIDA", "Concluída"
 
+        def color(self):
+            match self:
+                case self.PENDENTE: return "secondary"
+                case self.EM_ANDAMENTO: return "primary"
+                case self.CONCLUIDA: return "success"
+
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="atividades")
     disciplina = models.ForeignKey("Disciplina", on_delete=models.SET_NULL, null=True, blank=True, related_name="atividades")
     peso = models.PositiveSmallIntegerField(null=True, blank=True, choices=[(i, i) for i in range(1, 11)], default=5)
@@ -33,7 +45,7 @@ class Atividade(models.Model):
     concluido_em = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDENTE)
     categoria = models.CharField(max_length=15, choices=Categoria.choices, default=Categoria.TAREFA)
-    prioridade = models.CharField(max_length=10, choices=Prioridade.choices, default=Prioridade.MEDIA)
+    prioridade = models.IntegerField(choices=Prioridade.choices, default=Prioridade.MEDIA)
     modalidade = models.CharField(max_length=12, choices=Modalidade.choices, default=Modalidade.ONLINE)
     criado_em = models.DateTimeField(auto_now_add=True, blank=True)
 
@@ -46,3 +58,9 @@ class Atividade(models.Model):
 
     def __str__(self):
         return self.titulo
+
+    def prioridade_color(self):
+        return self.Prioridade(self.prioridade).color()
+
+    def status_color(self):
+        return self.Status(self.status).color()
