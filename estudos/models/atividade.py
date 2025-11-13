@@ -54,7 +54,11 @@ class Atividade(models.Model):
             models.Index(fields=["usuario", "data_prazo"]),
             models.Index(fields=["disciplina"]),
         ]
-        ordering = ["data_prazo", "-prioridade", "-peso"]
+        ordering = [
+            "data_prazo",
+            "-prioridade",
+            "-peso"
+        ]
 
     def __str__(self):
         return self.titulo
