@@ -1,15 +1,9 @@
 # ppads-soe-project
 
-Fazer o download do arquivo ZIP e abrir ele em um editor de texto
+Antes de tudo, fazer o download do arquivo ZIP e abrir ele em um editor de texto
 
-Usar o comando CD para ir ao diretorio onde está localizado o manage.py
+Depois instalar o uv de acordo com o sistema operacional, disponível neste link: https://docs.astral.sh/uv/getting-started/installation/ para ter o pacote das libraries, python e django
 
-Executar 'python -m venv venv'
+Executar 'uv run manage.py migrate'
 
-Executar 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process' caso dê erro de privacidade 
-
-Executar 'venv\Scripts\Activate.ps1'
-
-Executar 'pip install django djangorestframework', 'pip install django-crispy-forms' e 'pip install crispy-bootstrap5' para baixar as bibliotecas utilizadas no software
-
-Depois executar 'python manage.py runserver'
+Depois executar 'uv run manage.py runserver'
