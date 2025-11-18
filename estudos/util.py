@@ -12,3 +12,9 @@ def compact(dict):
 
 def exclude(dict, *keys):
     return {k: v for k, v in dict.items() if k not in keys}
+
+def timedelta_text(value):
+    hours, remainder = divmod(value.total_seconds(), 3600)
+    minutes, _ = divmod(remainder, 60)
+
+    return f"{hours:02.0f}h{minutes:02.0f}m"

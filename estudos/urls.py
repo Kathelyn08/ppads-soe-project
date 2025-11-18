@@ -28,6 +28,13 @@ from .views.meta import (
     MetaDeleteView
 )
 
+from .views.sessao import (
+    SessaoListView,
+    SessaoCreateView,
+    SessaoUpdateView,
+    SessaoDeleteView
+)
+
 from .views.agenda import AgendaView
 
 urlpatterns = [
@@ -53,6 +60,11 @@ urlpatterns = [
     path('meta/novo/', MetaCreateView.as_view(), name='meta-create'),
     path('meta/<int:pk>/editar/', MetaUpdateView.as_view(), name='meta-update'),
     path('meta/<int:pk>/excluir/', MetaDeleteView.as_view(), name='meta-delete'),
+
+    path('sessao/', SessaoListView.as_view(), name='sessao-list'),
+    path('sessao/novo/', SessaoCreateView.as_view(), name='sessao-create'),
+    path('sessao/<int:pk>/editar/', SessaoUpdateView.as_view(), name='sessao-update'),
+    path('sessao/<int:pk>/excluir/', SessaoDeleteView.as_view(), name='sessao-delete'),
 
     path('agenda/', AgendaView.as_view(), name='agenda'),
 ]
