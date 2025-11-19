@@ -9,7 +9,7 @@ def dashboard(request):
     u = request.user
     recentes = u.atividades.order_by("-criado_em")[:5]
     categorias = {x: u.atividades.filter(categoria=x).count() for x in Atividade.Categoria}
-    prioridades = u.atividades.order_by("-data_prazo", "-prioridade")[:5]
+    prioridades = u.atividades.exclude(status=Atividade.Status.CONCLUIDA).order_by("-data_prazo", "-prioridade")[:5]
 
     week_start, week_end = week_range()
     semana = u.atividades.filter(
