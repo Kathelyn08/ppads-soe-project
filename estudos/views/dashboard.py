@@ -7,7 +7,7 @@ from datetime import date, timedelta
 @login_required
 def dashboard(request):
     u = request.user
-    recentes = u.atividades.order_by("-criado_em")[:5]
+    recentes = u.atividades.order_by("-criado_em")[:3]
     categorias = {x: u.atividades.filter(categoria=x).count() for x in Atividade.Categoria}
     prioridades = u.atividades.exclude(status=Atividade.Status.CONCLUIDA).order_by("-data_prazo", "-prioridade")[:5]
 
@@ -20,7 +20,7 @@ def dashboard(request):
     progresso = concluidas.count() / (semana.count() or 1) * 100
 
     today = date.today()
-    tomorrow = today + timedelta(days=2)
+    tomorrow = today + timedelta(days=3)
     vencendo = u.atividades.filter(
         data_prazo__gte=today,
         data_prazo__lte=tomorrow
