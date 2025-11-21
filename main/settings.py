@@ -29,8 +29,11 @@ SECRET_KEY = 'django-insecure-wr6+nh3b)4-x48me4zot3%qhbwp=juh5%lly*mplg#q-#f74ik
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "estudamais-vfnq.onrender.com"
+    "estudamais-vfnq.onrender.com",
+    "localhost"
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
