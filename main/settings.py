@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
     "localhost"
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ["https://estudamais-vfnq.onrender.com"]
 
 
 # Application definition
