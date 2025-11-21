@@ -71,8 +71,8 @@ class MetaListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form
         context['total'] = len(context['metas'])
-        #context['concluido'] = len([meta for meta in context['metas'] if meta.concluida()])
-        #context['progresso'] = context['concluido'] / (context['total'] or 1) * 100
+        context['concluido'] = len([meta for meta in context['metas'] if meta.concluida()])
+        context['progresso'] = context['concluido'] / (context['total'] or 1) * 100
 
         return context
 
