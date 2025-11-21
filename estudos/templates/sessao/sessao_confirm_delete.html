@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="bg-dark border border-secondary rounded-3 p-3 mb-3 text-start">
-                        <p class="mb-2"><strong class="text-light">Disciplina:</strong> <span class="text-light-emphasis">{{ object.disciplina|default:"Não informada" }}</span></p>
+                        <p class="mb-2"><strong class="text-light">Nome:</strong> <span class="text-light-emphasis">{{ object.nome|default:"Não informada" }}</span></p>
                         <p class="mb-2"><strong class="text-light">Descrição:</strong> <span class="text-light-emphasis">{{ object.descricao|default:"Não informada" }}</span></p>
                         <p class="mb-2"><strong class="text-light">Data Inicial:</strong> <span class="text-light-emphasis">{{ object.data_inicial|date:"d M y G:i" }}</span></p>
                         <p class="mb-2"><strong class="text-light">Data Final:</strong> <span class="text-light-emphasis">{{ object.data_final|date:"d M y G:i"|default:"Não informada" }}</span></p>

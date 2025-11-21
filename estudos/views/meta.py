@@ -12,22 +12,11 @@ class MetaForm(ModelForm):
     class Meta:
         model = Meta
         fields = [
+            'nome',
             'disciplina',
             'descricao',
-            'alvo',
-            'data_inicial',
-            'data_final'
+            'alvo'
         ]
-        widgets = {
-            'data_inicial': forms.DateTimeInput(
-                format="%Y-%m-%dT%H:%M:%S",
-                attrs={'type': 'datetime-local'}
-            ),
-            'data_final': forms.DateTimeInput(
-                format="%Y-%m-%dT%H:%M:%S",
-                attrs={'type': 'datetime-local'}
-            )
-        }
 
 class MetaListView(LoginRequiredMixin, ListView):
     model = Meta
@@ -60,17 +49,21 @@ class MetaListView(LoginRequiredMixin, ListView):
                 x.field.widget.attrs = { 'class': 'form-control bg-dark text-light border-secondary' }
 
     def get_queryset(self):
-        queryset = self.request.user.metas.all().order_by('data_final')
+        queryset = self.request.user.metas.all().order_by('criado_em')
 
         self.form = self.Filter(self.request.GET.dict())
 
         if self.form.is_valid():
             filters = compact(self.form.cleaned_data)
-            filters['data_inicial__lte'] = filters['data_final__lte']
-            queryset = queryset.filter(
-                Q(data_final__isnull=True, **exclude(filters, "data_final__lte"))
-                | Q(**filters)
-            )
+            
+            # CORREÇÃO: Mapear para campos existentes
+            new_filters = {}
+            if 'data_inicial__gte' in filters:
+                new_filters['criado_em__gte'] = filters['data_inicial__gte']
+            if 'data_final__lte' in filters:
+                new_filters['criado_em__lte'] = filters['data_final__lte']
+            
+            queryset = queryset.filter(**new_filters)
         
         return queryset
 
@@ -78,8 +71,8 @@ class MetaListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form
         context['total'] = len(context['metas'])
-        context['concluido'] = len([meta for meta in context['metas'] if meta.concluida()])
-        context['progresso'] = context['concluido'] / (context['total'] or 1) * 100
+        #context['concluido'] = len([meta for meta in context['metas'] if meta.concluida()])
+        #context['progresso'] = context['concluido'] / (context['total'] or 1) * 100
 
         return context
 

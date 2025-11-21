@@ -13,7 +13,7 @@ class SessaoForm(ModelForm):
     class Meta:
         model = Sessao
         fields = [
-            'disciplina',
+            'meta',
             'descricao',
             'data_inicial',
             'data_final'

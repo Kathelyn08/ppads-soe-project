@@ -27,14 +27,14 @@
                     {% endif %}
 
                     <div class="col-12 mb-4">
-                        <label for="{{ form.disciplina.id_for_label }}" class="form-label text-light mb-2">
-                            Disciplina
+                        <label for="{{ form.meta.id_for_label }}" class="form-label text-light mb-2">
+                            Meta
                         </label>
                         <div class="d-flex flex-column">
-                            {{ form.disciplina }}
+                            {{ form.meta }}
                         </div>
-                        {% if form.disciplina.errors %}
-                        <div class="text-warning mt-1">{{ form.disciplina.errors }}</div>
+                        {% if form.meta.errors %}
+                        <div class="text-warning mt-1">{{ form.meta.errors }}</div>
                         {% endif %}
                     </div>
 

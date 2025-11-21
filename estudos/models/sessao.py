@@ -6,7 +6,7 @@ from ..util import timedelta_text
 
 class Sessao(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sessoes")
-    disciplina = models.ForeignKey("Disciplina", on_delete=models.SET_NULL, null=True, blank=True, related_name="sessoes")
+    meta = models.ForeignKey("Meta", on_delete=models.CASCADE, related_name="sessoes")
     descricao = models.TextField(null=True, blank=True)
     data_inicial = models.DateTimeField(default=timezone.now)
     data_final = models.DateTimeField(null=True, blank=True)

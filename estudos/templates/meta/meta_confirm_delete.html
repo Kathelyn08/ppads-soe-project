@@ -27,8 +27,7 @@
                         <p class="mb-2"><strong class="text-light">Disciplina:</strong> <span class="text-light-emphasis">{{ object.disciplina|default:"Não informada" }}</span></p>
                         <p class="mb-2"><strong class="text-light">Descrição:</strong> <span class="text-light-emphasis">{{ object.descricao|default:"Não informada" }}</span></p>
                         <p class="mb-2"><strong class="text-light">Alvo:</strong> <span class="text-light-emphasis">{{ object.alvo }}h</span></p>
-                        <p class="mb-2"><strong class="text-light">Data Inicial:</strong> <span class="text-light-emphasis">{{ object.data_inicial|date:"d M y G:i" }}</span></p>
-                        <p class="mb-2"><strong class="text-light">Data Final:</strong> <span class="text-light-emphasis">{{ object.data_final|date:"d M y G:i"|default:"Não informada" }}</span></p>
+                        <p class="mb-2"><strong class="text-light">Criado em: </strong> <span class="text-light-emphasis">{{ object.criado_em|date:"d M y G:i" }}</span></p>
                     </div>
                 </div>
                 
